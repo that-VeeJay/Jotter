@@ -2,8 +2,8 @@ import { Card } from "@nextui-org/react";
 
 export default function Bulletin() {
     return (
-        <div className="container mx-auto">
-            <Card className="p-10 text-center space-y-3">
+        <section>
+            <Card className="p-8 md:p-10 text-center space-y-3">
                 <p className="text-sm text-gray-500 lg:text-base tracking-widest">
                     WELCOME TO JOTTER
                 </p>
@@ -14,6 +14,6 @@ export default function Bulletin() {
                     <span className="text-red-500">entertainment</span>🎬
                 </h3>
             </Card>
-        </div>
+        </section>
     );
 }

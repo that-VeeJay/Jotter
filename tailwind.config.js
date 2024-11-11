@@ -16,6 +16,10 @@ export default {
             fontFamily: {
                 sans: ["Poppins", ...defaultTheme.fontFamily.sans],
             },
+
+            aspectRatio: {
+                "4/3": "4 / 3",
+            },
         },
 
         container: {
