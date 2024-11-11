@@ -2,6 +2,7 @@ import NavLayout from "../Layout/NavLayout";
 import Bulletin from "../Sections/Bulletin";
 import FeaturedPost from "../Sections/FeaturedPost";
 import LatestPosts from "../Sections/LatestPosts";
+import Subscribe from "../Sections/Subscribe";
 
 export default function Home() {
     return (
@@ -9,14 +10,33 @@ export default function Home() {
             <Bulletin />
             <FeaturedPost />
             <LatestPosts />
-            <h1>---</h1>
-            <h1>---</h1>
-            <h1>---</h1>
-            <h1>---</h1>
-            <h1>---</h1>
-            <h1>---</h1>
-            <h1>---</h1>
-            <h1>---</h1>
+            <Subscribe />
+
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
         </div>
     );
 }
