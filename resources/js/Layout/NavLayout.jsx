@@ -106,13 +106,13 @@ export default function NavLayout({ children }) {
 
                 <NavbarContent justify="end">
                     <NavbarItem className="hidden md:flex text-black dark:text-white">
-                        <Link href="#">Login</Link>
+                        <Link href="/login">Login</Link>
                     </NavbarItem>
                     <NavbarItem>
                         <Button
                             as={Link}
                             color="danger"
-                            href="#"
+                            href="/sign-up"
                             variant="flat"
                             className="hidden md:flex "
                         >

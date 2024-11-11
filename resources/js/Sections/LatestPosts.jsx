@@ -9,9 +9,9 @@ const PostCard = () => {
             <Image
                 src={post2}
                 isBlurred
-                className="aspect-video object-cover"
+                className="aspect-video object-cover lg:aspect-square xl:aspect-video"
             />
-            <div className="space-y-3 px-5 py-3">
+            <div className="space-y-3 px-5 py-3 lg:px-7 lg:py-8 lg:flex lg:flex-col lg:justify-between xl:px-6 xl:py-3">
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                         <Avatar size="sm" />
