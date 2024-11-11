@@ -13,9 +13,7 @@ createInertiaApp({
     setup({ el, App, props }) {
         createRoot(el).render(
             <NextUIProvider>
-                <main className="dark text-foreground bg-background">
-                    <App {...props} />
-                </main>
+                <App {...props} />
             </NextUIProvider>
         );
     },

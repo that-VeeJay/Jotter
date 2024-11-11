@@ -5,7 +5,7 @@ import LatestPosts from "../Sections/LatestPosts";
 
 export default function Home() {
     return (
-        <div className="container mx-auto space-y-8">
+        <div className="container mx-auto space-y-8 pt-24">
             <Bulletin />
             <FeaturedPost />
             <LatestPosts />

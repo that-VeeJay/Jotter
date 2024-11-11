@@ -1,17 +1,38 @@
+import { useEffect, useState } from "react";
+
 import {
+    Button,
+    Link,
     Navbar,
     NavbarBrand,
-    NavbarMenuToggle,
-    NavbarMenu,
-    NavbarMenuItem,
     NavbarContent,
     NavbarItem,
-    Link,
-    Button,
+    NavbarMenu,
+    NavbarMenuItem,
+    NavbarMenuToggle,
+    Switch,
 } from "@nextui-org/react";
+
+import { SunIcon } from "../Icons/SunIcon";
+import { MoonIcon } from "../Icons/MoonIcon";
 import { JotterLogo } from "../Icons/JotterLogo";
 
 export default function NavLayout({ children }) {
+    const [isDarkMode, setIsDarkMode] = useState(false);
+
+    useEffect(() => {
+        const savedTheme = localStorage.getItem("theme");
+        if (savedTheme) {
+            setIsDarkMode(savedTheme === "dark");
+        }
+    }, []);
+
+    const toggleTheme = () => {
+        setIsDarkMode(!isDarkMode);
+        const newTheme = isDarkMode ? "light" : "dark";
+        localStorage.setItem("theme", newTheme);
+    };
+
     const navLinks = [
         { label: "Home", href: "#", isActive: false },
         { label: "Creator", href: "#", isActive: true },
@@ -48,7 +69,11 @@ export default function NavLayout({ children }) {
 
     return (
         <>
-            <Navbar disableAnimation isBordered className="mb-5">
+            <Navbar
+                disableAnimation
+                isBordered
+                className={`fixed ${isDarkMode ? "dark" : "light"}`}
+            >
                 <NavbarContent className="sm:hidden" justify="start">
                     <NavbarMenuToggle />
                 </NavbarContent>
@@ -86,6 +111,22 @@ export default function NavLayout({ children }) {
                             Sign Up
                         </Button>
                     </NavbarItem>
+
+                    <NavbarItem>
+                        <Switch
+                            checked={isDarkMode}
+                            onChange={(e) => toggleTheme(e.target.checked)}
+                            size="sm"
+                            color="danger"
+                            thumbIcon={({ isSelected, className }) =>
+                                isSelected ? (
+                                    <SunIcon className={className} />
+                                ) : (
+                                    <MoonIcon className={className} />
+                                )
+                            }
+                        />
+                    </NavbarItem>
                 </NavbarContent>
 
                 <NavbarMenu>
@@ -110,7 +151,13 @@ export default function NavLayout({ children }) {
                 </NavbarMenu>
             </Navbar>
 
-            <main>{children}</main>
+            <main
+                className={`${
+                    isDarkMode ? "dark text-foreground bg-background" : ""
+                }`}
+            >
+                {children}
+            </main>
         </>
     );
 }
