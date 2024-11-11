@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
-
+import { Link } from "@inertiajs/react";
 import {
     Button,
-    Link,
     Navbar,
     NavbarBrand,
     NavbarContent,
@@ -55,7 +54,11 @@ export default function NavLayout({ children }) {
     const RenderNavbarLinks = () => (
         <NavbarContent className="hidden sm:flex gap-3">
             {navLinks.map((link) => (
-                <NavbarItem key={link.label} isActive={link.isActive}>
+                <NavbarItem
+                    key={link.label}
+                    isActive={link.isActive}
+                    className="dark:text-white"
+                >
                     <Link
                         color={link.isActive ? "danger" : "foreground"}
                         href={link.href}
@@ -80,8 +83,8 @@ export default function NavLayout({ children }) {
 
                 <NavbarContent className="sm:hidden pr-3" justify="center">
                     <NavbarBrand>
-                        <JotterLogo />
-                        <p className="font-bold text-inherit">JOTTER</p>
+                        <JotterLogo isDarkMode={isDarkMode} />
+                        <p className="font-bold dark:text-white">JOTTER</p>
                     </NavbarBrand>
                 </NavbarContent>
 
@@ -89,16 +92,20 @@ export default function NavLayout({ children }) {
                     className="hidden sm:flex gap-4"
                     justify="center"
                 >
-                    <NavbarBrand>
-                        <JotterLogo />
-                        <p className="font-bold text-inherit">JOTTER</p>
-                    </NavbarBrand>
+                    <Link href="/">
+                        <NavbarBrand>
+                            <JotterLogo isDarkMode={isDarkMode} />
+                            <p className="font-semibold text-inherit text-xl dark:text-white pr-5">
+                                JOTTER
+                            </p>
+                        </NavbarBrand>
+                    </Link>
 
                     <RenderNavbarLinks />
                 </NavbarContent>
 
                 <NavbarContent justify="end">
-                    <NavbarItem className="hidden lg:flex">
+                    <NavbarItem className="hidden md:flex text-black dark:text-white">
                         <Link href="#">Login</Link>
                     </NavbarItem>
                     <NavbarItem>
@@ -107,6 +114,7 @@ export default function NavLayout({ children }) {
                             color="danger"
                             href="#"
                             variant="flat"
+                            className="hidden md:flex "
                         >
                             Sign Up
                         </Button>
@@ -158,6 +166,49 @@ export default function NavLayout({ children }) {
             >
                 {children}
             </main>
+
+            <footer
+                className={`${
+                    isDarkMode ? "dark text-foreground bg-background" : ""
+                }`}
+            >
+                <div className="container mx-auto px-10 pt-36 pb-16">
+                    <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+                        <div className="flex items-center gap-2">
+                            <JotterLogo isDarkMode={isDarkMode} />
+                            <span className="text-2xl font-semibold">
+                                JOTTER
+                            </span>
+                        </div>
+
+                        <div className="space-x-10 font-medium lg:text-right">
+                            <Link
+                                href="#"
+                                className="text-gray-500 hover:underline"
+                            >
+                                About
+                            </Link>
+                            <Link
+                                href="#"
+                                className="text-gray-500 hover:underline"
+                            >
+                                Privacy Policy
+                            </Link>
+                            <Link
+                                href="#"
+                                className="text-gray-500 hover:underline"
+                            >
+                                Contact
+                            </Link>
+                        </div>
+                    </div>
+
+                    <hr className="dark:border-gray-700 my-10" />
+                    <div className="text-center">
+                        <p>© 2023 VEE JAY. All Rights Reserved.</p>
+                    </div>
+                </div>
+            </footer>
         </>
     );
 }
