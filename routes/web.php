@@ -1,9 +1,7 @@
 <?php
 
+use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
-Route::inertia('/', 'Home');
+Route::get('/', [PostController::class, 'index']);
 
-
-Route::inertia('/login', 'Auth/Login');
-Route::inertia('/sign-up', 'Auth/SignUp');
