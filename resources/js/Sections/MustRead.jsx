@@ -5,13 +5,9 @@ import post2 from "../assets/posts/post2.jpg";
 
 const PostCard = () => {
     return (
-        <Card className="p-3 grid grid-cols-1 lg:grid-cols-2 shadow-none border-1 dark:border-zinc-700">
-            <Image
-                src={post2}
-                isBlurred
-                className="aspect-video object-cover"
-            />
-            <div className="space-y-3 px-5 py-3">
+        <Card className="p-3 space-y-3 shadow-none border-1 dark:border-zinc-700">
+            <Image src={post2} isBlurred className="aspect-4/3 object-cover" />
+            <div className="space-y-3 p-3">
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                         <Avatar size="sm" />
@@ -21,7 +17,7 @@ const PostCard = () => {
                         12 mins ago
                     </p>
                 </div>
-                <h3 className="font-semibold text-xl line-clamp-2">
+                <h3 className="font-semibold text-xl line-clamp-3">
                     Lorem ipsum dolor sit, amet consectetur adipisicing elit.
                     Dolorem, delectus.
                 </h3>
@@ -44,14 +40,17 @@ const PostCard = () => {
     );
 };
 
-export default function LatestPosts() {
+export default function MustRead() {
     return (
-        <section className="space-y-5 lg:col-span-2">
-            <SectionTitle title="Latest Posts" displaySeeAll={false} />
-            <PostCard />
-            <PostCard />
-            <PostCard />
-            <PostCard />
+        <section className="space-y-5">
+            <SectionTitle title="Must Read" />
+
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5">
+                <PostCard />
+                <PostCard />
+                <PostCard />
+                <PostCard />
+            </div>
         </section>
     );
 }
