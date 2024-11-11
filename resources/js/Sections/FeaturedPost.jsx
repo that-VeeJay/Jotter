@@ -36,7 +36,7 @@ export default function FeaturedPost() {
                             Travel
                         </Chip>
                         <span>•</span>
-                        <p>4 min red</p>
+                        <p>4 min read</p>
                     </div>
                 </div>
             </div>
