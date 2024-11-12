@@ -1,11 +1,11 @@
 const categoryColors = {
-    Technology: "default",
+    Technology: "success",
     Lifestyle: "primary",
     Health: "secondary",
     Finance: "success",
     Education: "warning",
     Entertainment: "danger",
-    Travel: "default",
+    Travel: "success",
     Food: "primary",
     Sports: "secondary",
     Gaming: "success",

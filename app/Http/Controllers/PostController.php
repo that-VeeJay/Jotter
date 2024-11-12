@@ -56,7 +56,9 @@ class PostController extends BaseController
         // Create the new post with all data
         Post::create($postData);
 
-        return redirect()->route('home');
+        return redirect()->route('home')
+            ->with('success', 'Post created successfully!');
+            
     }
 
 }
