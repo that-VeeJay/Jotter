@@ -76,7 +76,7 @@ export default function SignUp() {
                     <JotterLogo width="50" height="50" />
                     <h3 className="text-2xl font-semibold">JOTTER</h3>
                 </div>
-                <Card className="w-[28rem] space-y-6 p-10">
+                <Card className="w-[28rem] space-y-6 p-10 shadow-none md:shadow-lg">
                     <h1 className="text-2xl font-semibold">
                         Create an account
                     </h1>

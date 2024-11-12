@@ -1,7 +1,12 @@
 import { useEffect, useState } from "react";
 import { Link, useForm } from "@inertiajs/react";
 import {
+    Avatar,
     Button,
+    Dropdown,
+    DropdownItem,
+    DropdownMenu,
+    DropdownTrigger,
     Navbar,
     NavbarBrand,
     NavbarContent,
@@ -10,19 +15,18 @@ import {
     NavbarMenuItem,
     NavbarMenuToggle,
     Switch,
-    Dropdown,
-    DropdownTrigger,
-    Avatar,
-    DropdownMenu,
-    DropdownItem,
 } from "@nextui-org/react";
-
 import { SunIcon } from "../Icons/SunIcon";
 import { MoonIcon } from "../Icons/MoonIcon";
 import { JotterLogo } from "../Icons/JotterLogo";
 import userProfile from "../assets/userProfile.jpg";
 
-export default function NavLayout({ children, isAuthenticated, user }) {
+export default function NavLayout({
+    children,
+    isAuthenticated,
+    user,
+    showFooter = true,
+}) {
     const { post } = useForm();
 
     function submit(e) {
@@ -118,6 +122,24 @@ export default function NavLayout({ children, isAuthenticated, user }) {
                 </NavbarContent>
 
                 <NavbarContent justify="end">
+                    {/* Write Button */}
+                    {isAuthenticated ? (
+                        <NavbarItem className="mt-2">
+                            <Button
+                                as={Link}
+                                href="/create"
+                                className="group relative mb-2 me-2 hidden items-center justify-center overflow-hidden rounded-lg bg-gradient-to-br from-pink-500 to-orange-400 p-0.5 text-sm font-medium text-gray-900 hover:text-white focus:outline-none focus:ring-4 focus:ring-pink-200 group-hover:from-pink-500 group-hover:to-orange-400 dark:text-white dark:focus:ring-pink-800 md:inline-flex"
+                            >
+                                <span className="relative rounded-md bg-white px-4 py-2 group-hover:bg-opacity-0 dark:bg-gray-900">
+                                    Create
+                                </span>
+                            </Button>
+                        </NavbarItem>
+                    ) : (
+                        ""
+                    )}
+
+                    {/* Profile || Login / Sign Up */}
                     {!isAuthenticated ? (
                         <>
                             <NavbarItem className="hidden text-black dark:text-white md:flex">
@@ -127,7 +149,7 @@ export default function NavLayout({ children, isAuthenticated, user }) {
                                 <Button
                                     as={Link}
                                     color="danger"
-                                    href="/sign-up"
+                                    href="/register"
                                     variant="flat"
                                     className="hidden md:flex"
                                 >
@@ -142,7 +164,7 @@ export default function NavLayout({ children, isAuthenticated, user }) {
                                     <Avatar
                                         isBordered
                                         as="button"
-                                        className="transition-transform"
+                                        className="hidden transition-transform md:inline-flex"
                                         color="danger"
                                         name={user.name}
                                         size="sm"
@@ -188,7 +210,7 @@ export default function NavLayout({ children, isAuthenticated, user }) {
                             </Dropdown>
                         </>
                     )}
-
+                    {/* Dark Mode Toggle */}
                     <NavbarItem>
                         <Switch
                             checked={isDarkMode}
@@ -236,48 +258,52 @@ export default function NavLayout({ children, isAuthenticated, user }) {
                 {children}
             </main>
 
-            <footer
-                className={`${
-                    isDarkMode ? "bg-background text-foreground dark" : ""
-                }`}
-            >
-                <div className="container mx-auto px-10 pb-16 pt-36">
-                    <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-                        <div className="flex items-center gap-2">
-                            <JotterLogo isDarkMode={isDarkMode} />
-                            <span className="text-2xl font-semibold">
-                                JOTTER
-                            </span>
+            {showFooter ? (
+                <footer
+                    className={`${
+                        isDarkMode ? "bg-background text-foreground dark" : ""
+                    }`}
+                >
+                    <div className="container mx-auto px-10 pb-16 pt-36">
+                        <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+                            <div className="flex items-center gap-2">
+                                <JotterLogo isDarkMode={isDarkMode} />
+                                <span className="text-2xl font-semibold">
+                                    JOTTER
+                                </span>
+                            </div>
+
+                            <div className="space-x-10 font-medium lg:text-right">
+                                <Link
+                                    href="#"
+                                    className="text-gray-500 hover:underline"
+                                >
+                                    About
+                                </Link>
+                                <Link
+                                    href="#"
+                                    className="text-gray-500 hover:underline"
+                                >
+                                    Privacy Policy
+                                </Link>
+                                <Link
+                                    href="#"
+                                    className="text-gray-500 hover:underline"
+                                >
+                                    Contact
+                                </Link>
+                            </div>
                         </div>
 
-                        <div className="space-x-10 font-medium lg:text-right">
-                            <Link
-                                href="#"
-                                className="text-gray-500 hover:underline"
-                            >
-                                About
-                            </Link>
-                            <Link
-                                href="#"
-                                className="text-gray-500 hover:underline"
-                            >
-                                Privacy Policy
-                            </Link>
-                            <Link
-                                href="#"
-                                className="text-gray-500 hover:underline"
-                            >
-                                Contact
-                            </Link>
+                        <hr className="my-10 dark:border-gray-700" />
+                        <div className="text-center">
+                            <p>© 2023 VEE JAY. All Rights Reserved.</p>
                         </div>
                     </div>
-
-                    <hr className="my-10 dark:border-gray-700" />
-                    <div className="text-center">
-                        <p>© 2023 VEE JAY. All Rights Reserved.</p>
-                    </div>
-                </div>
-            </footer>
-        </>
+                </footer>
+            ) : (
+                ""
+            )}
+        </> 
     );
 }

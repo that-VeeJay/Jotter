@@ -3,3 +3,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.react-quill .ql-editor {
+    font-family: "Poppins";
+    font-size: 0.9rem;
+    line-height: 1.6;
+}

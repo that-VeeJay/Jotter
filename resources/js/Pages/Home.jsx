@@ -6,7 +6,7 @@ import LatestPosts from "../Sections/LatestPosts";
 import MostPopular from "../Sections/MostPopular";
 import FeaturedPost from "../Sections/FeaturedPost";
 
-export default function Home({ latestPosts, isAuthenticated, user }) {
+export default function Home({ latestPosts }) {
     return (
         <div className="container mx-auto space-y-10 pt-24">
             <Bulletin />

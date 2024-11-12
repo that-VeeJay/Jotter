@@ -32,7 +32,7 @@ const PostCard = ({ post }) => {
     return (
         <Card
             key={post.id}
-            className="grid grid-cols-1 border-1 p-3 shadow-none dark:border-zinc-700 lg:grid-cols-2"
+            className="grid grid-cols-1 border-1 p-3 shadow-none dark:border-zinc-800 lg:grid-cols-2"
         >
             <Image
                 isLoading={imageLoading}
