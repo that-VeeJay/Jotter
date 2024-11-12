@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "@inertiajs/react";
+import { Link, useForm } from "@inertiajs/react";
 import {
     Button,
     Navbar,
@@ -10,13 +10,26 @@ import {
     NavbarMenuItem,
     NavbarMenuToggle,
     Switch,
+    Dropdown,
+    DropdownTrigger,
+    Avatar,
+    DropdownMenu,
+    DropdownItem,
 } from "@nextui-org/react";
 
 import { SunIcon } from "../Icons/SunIcon";
 import { MoonIcon } from "../Icons/MoonIcon";
 import { JotterLogo } from "../Icons/JotterLogo";
+import userProfile from "../assets/userProfile.jpg";
 
-export default function NavLayout({ children }) {
+export default function NavLayout({ children, isAuthenticated, user }) {
+    const { post } = useForm();
+
+    function submit(e) {
+        e.preventDefault();
+        post("/logout");
+    }
+
     const [isDarkMode, setIsDarkMode] = useState(false);
 
     useEffect(() => {
@@ -52,7 +65,7 @@ export default function NavLayout({ children }) {
     ];
 
     const RenderNavbarLinks = () => (
-        <NavbarContent className="hidden sm:flex gap-3">
+        <NavbarContent className="hidden gap-3 sm:flex">
             {navLinks.map((link) => (
                 <NavbarItem
                     key={link.label}
@@ -81,7 +94,7 @@ export default function NavLayout({ children }) {
                     <NavbarMenuToggle />
                 </NavbarContent>
 
-                <NavbarContent className="sm:hidden pr-3" justify="center">
+                <NavbarContent className="pr-3 sm:hidden" justify="center">
                     <NavbarBrand>
                         <JotterLogo isDarkMode={isDarkMode} />
                         <p className="font-bold dark:text-white">JOTTER</p>
@@ -89,13 +102,13 @@ export default function NavLayout({ children }) {
                 </NavbarContent>
 
                 <NavbarContent
-                    className="hidden sm:flex gap-4"
+                    className="hidden gap-4 sm:flex"
                     justify="center"
                 >
                     <Link href="/">
                         <NavbarBrand>
                             <JotterLogo isDarkMode={isDarkMode} />
-                            <p className="font-semibold text-inherit text-xl dark:text-white pr-5">
+                            <p className="pr-5 text-xl font-semibold text-inherit dark:text-white">
                                 JOTTER
                             </p>
                         </NavbarBrand>
@@ -105,20 +118,76 @@ export default function NavLayout({ children }) {
                 </NavbarContent>
 
                 <NavbarContent justify="end">
-                    <NavbarItem className="hidden md:flex text-black dark:text-white">
-                        <Link href="/login">Login</Link>
-                    </NavbarItem>
-                    <NavbarItem>
-                        <Button
-                            as={Link}
-                            color="danger"
-                            href="/sign-up"
-                            variant="flat"
-                            className="hidden md:flex "
-                        >
-                            Sign Up
-                        </Button>
-                    </NavbarItem>
+                    {!isAuthenticated ? (
+                        <>
+                            <NavbarItem className="hidden text-black dark:text-white md:flex">
+                                <Link href="/login">Login</Link>
+                            </NavbarItem>
+                            <NavbarItem>
+                                <Button
+                                    as={Link}
+                                    color="danger"
+                                    href="/sign-up"
+                                    variant="flat"
+                                    className="hidden md:flex"
+                                >
+                                    Sign Up
+                                </Button>
+                            </NavbarItem>
+                        </>
+                    ) : (
+                        <>
+                            <Dropdown placement="bottom-end">
+                                <DropdownTrigger>
+                                    <Avatar
+                                        isBordered
+                                        as="button"
+                                        className="transition-transform"
+                                        color="danger"
+                                        name={user.name}
+                                        size="sm"
+                                        src={user.profile || userProfile}
+                                    />
+                                </DropdownTrigger>
+                                <DropdownMenu
+                                    aria-label="Profile Actions"
+                                    variant="flat"
+                                >
+                                    <DropdownItem
+                                        key="profile"
+                                        className="h-14 gap-2"
+                                    >
+                                        <p className="font-semibold">
+                                            Signed in as
+                                        </p>
+                                        <p className="font-semibold">
+                                            {user.email}
+                                        </p>
+                                    </DropdownItem>
+                                    <DropdownItem key="profile">
+                                        Profile
+                                    </DropdownItem>
+                                    <DropdownItem key="settings">
+                                        Settings
+                                    </DropdownItem>
+                                    <DropdownItem key="help_and_feedback">
+                                        Help & Feedback
+                                    </DropdownItem>
+                                    <DropdownItem key="logout" color="">
+                                        <form onSubmit={submit}>
+                                            <Button
+                                                type="submit"
+                                                href="/logout"
+                                                className="w-full bg-red-200 text-red-500"
+                                            >
+                                                Log out
+                                            </Button>
+                                        </form>
+                                    </DropdownItem>
+                                </DropdownMenu>
+                            </Dropdown>
+                        </>
+                    )}
 
                     <NavbarItem>
                         <Switch
@@ -146,8 +215,8 @@ export default function NavLayout({ children }) {
                                     index === 2
                                         ? "warning"
                                         : index === menuItems.length - 1
-                                        ? "danger"
-                                        : "foreground"
+                                          ? "danger"
+                                          : "foreground"
                                 }
                                 href="#"
                                 size="lg"
@@ -161,7 +230,7 @@ export default function NavLayout({ children }) {
 
             <main
                 className={`${
-                    isDarkMode ? "dark text-foreground bg-background" : ""
+                    isDarkMode ? "bg-background text-foreground dark" : ""
                 }`}
             >
                 {children}
@@ -169,10 +238,10 @@ export default function NavLayout({ children }) {
 
             <footer
                 className={`${
-                    isDarkMode ? "dark text-foreground bg-background" : ""
+                    isDarkMode ? "bg-background text-foreground dark" : ""
                 }`}
             >
-                <div className="container mx-auto px-10 pt-36 pb-16">
+                <div className="container mx-auto px-10 pb-16 pt-36">
                     <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
                         <div className="flex items-center gap-2">
                             <JotterLogo isDarkMode={isDarkMode} />
@@ -203,7 +272,7 @@ export default function NavLayout({ children }) {
                         </div>
                     </div>
 
-                    <hr className="dark:border-gray-700 my-10" />
+                    <hr className="my-10 dark:border-gray-700" />
                     <div className="text-center">
                         <p>© 2023 VEE JAY. All Rights Reserved.</p>
                     </div>

@@ -5,19 +5,19 @@ import post2 from "../assets/posts/post2.jpg";
 
 const PostCard = () => {
     return (
-        <Card className="p-3 space-y-3 shadow-none border-1 dark:border-zinc-700">
+        <Card className="space-y-3 border-1 p-3 shadow-none dark:border-zinc-700">
             <Image src={post2} isBlurred className="aspect-4/3 object-cover" />
             <div className="space-y-3 p-3">
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                         <Avatar size="sm" />
-                        <p className="font-medium text-sm">John Doe</p>
+                        <p className="text-sm font-medium">John Doe</p>
                     </div>
                     <p className="text-sm font-medium text-gray-500">
                         12 mins ago
                     </p>
                 </div>
-                <h3 className="font-semibold text-xl line-clamp-3">
+                <h3 className="line-clamp-3 text-xl font-semibold">
                     Lorem ipsum dolor sit, amet consectetur adipisicing elit.
                     Dolorem, delectus.
                 </h3>
@@ -45,7 +45,7 @@ export default function MustRead() {
         <section className="space-y-5">
             <SectionTitle title="Must Read" />
 
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5">
+            <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-4">
                 <PostCard />
                 <PostCard />
                 <PostCard />

@@ -3,7 +3,7 @@ import SectionTitle from "../Components/SectionTitle";
 
 const PostCard = () => {
     return (
-        <Card className="space-y-2 shadow-none border-1 dark:border-zinc-700 p-5">
+        <Card className="space-y-2 border-1 p-5 shadow-none dark:border-zinc-700">
             <Chip color="danger" variant="flat">
                 Travel
             </Chip>
@@ -35,7 +35,7 @@ export default function MostPopular() {
                 <span>What's hot</span>
                 <SectionTitle title="Most Popular" displaySeeAll={false} />
 
-                <div className="space-y-3 mt-6">
+                <div className="mt-6 space-y-3">
                     <PostCard />
                     <PostCard />
                     <PostCard />
@@ -47,7 +47,7 @@ export default function MostPopular() {
                 <span>Discover by topic</span>
                 <SectionTitle title="Categories" displaySeeAll={false} />
 
-                <div className="grid gap-6 mt-6 grid-cols-4 lg:grid-cols-3 xl:grid-cols-4">
+                <div className="mt-6 grid grid-cols-4 gap-6 lg:grid-cols-3 xl:grid-cols-4">
                     <CategoryChip text="Travel" />
                     <CategoryChip text="Travel" />
                     <CategoryChip text="Travel" />

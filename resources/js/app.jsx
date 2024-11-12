@@ -14,7 +14,7 @@ createInertiaApp({
         createRoot(el).render(
             <NextUIProvider>
                 <App {...props} />
-            </NextUIProvider>
+            </NextUIProvider>,
         );
     },
 });

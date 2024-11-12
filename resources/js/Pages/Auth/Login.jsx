@@ -1,70 +1,103 @@
 import { useState } from "react";
-import { Link } from "@inertiajs/react";
-import { Button, Card, Input } from "@nextui-org/react";
+import { Link, useForm } from "@inertiajs/react";
+import { Button, Card, Input, Spinner } from "@nextui-org/react";
 import { JotterLogo } from "../../Icons/JotterLogo";
 import { EyeFilledIcon } from "../../Icons/EyeFilledIcon";
 import { EyeSlashFilledIcon } from "../../Icons/EyeSlashFilledIcon";
 
+function ErrorMessage({ error }) {
+    return error ? (
+        <span className="mt-1 text-sm text-red-500">{error}</span>
+    ) : null;
+}
+
 export default function Login() {
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-    const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] =
-        useState(false);
 
     const togglePasswordVisibility = () =>
         setIsPasswordVisible(!isPasswordVisible);
-    const toggleConfirmPasswordVisibility = () =>
-        setIsConfirmPasswordVisible(!isConfirmPasswordVisible);
+
+    const initialFieldValue = { email: "", password: "" };
+
+    const { data, setData, post, errors, processing } =
+        useForm(initialFieldValue);
+
+    const submit = (e) => {
+        e.preventDefault();
+        post("/login", {
+            onSuccess: () => setData(initialFieldValue),
+        });
+    };
 
     return (
         <section>
-            <div className="flex flex-col items-center justify-center min-h-screen space-y-5">
+            <div className="flex min-h-screen flex-col items-center justify-center space-y-5">
                 <div className="flex items-center">
                     <JotterLogo width="50" height="50" />
                     <h3 className="text-2xl font-semibold">JOTTER</h3>
                 </div>
-                <Card className="w-[28rem] p-10 space-y-6">
-                    <h1 class="text-2xl font-semibold">Login</h1>
-                    <Input
-                        isClearable
-                        type="email"
-                        label="Email"
-                        variant="bordered"
-                        placeholder="example@gmail.com"
-                        onClear={() => console.log("input cleared")}
-                        className="w-full"
-                    />
-                    <Input
-                        label="Password"
-                        variant="bordered"
-                        placeholder="••••••••••••"
-                        endContent={
-                            <button
-                                className="focus:outline-none"
-                                type="button"
-                                onClick={togglePasswordVisibility}
-                                aria-label="toggle password visibility"
-                            >
-                                {isPasswordVisible ? (
-                                    <EyeSlashFilledIcon className="text-2xl text-default-400 pointer-events-none" />
-                                ) : (
-                                    <EyeFilledIcon className="text-2xl text-default-400 pointer-events-none" />
-                                )}
-                            </button>
-                        }
-                        type={isPasswordVisible ? "text" : "password"}
-                        className="w-full"
-                    />
+                <Card className="w-[28rem] space-y-6 p-10">
+                    <h1 className="text-2xl font-semibold">Login</h1>
+                    <form onSubmit={submit} className="space-y-5">
+                        <Input
+                            type="email"
+                            label="Email"
+                            variant="flat"
+                            className="w-full"
+                            value={data.email}
+                            onChange={(e) => setData("email", e.target.value)}
+                        />
+                        <ErrorMessage error={errors.email} />
 
-                    <Button className="bg-zinc-900 hover:bg-zinc-800 text-white">
-                        <p className="font-medium">Login</p>
-                    </Button>
+                        <Input
+                            label="Password"
+                            variant="flat"
+                            value={data.password}
+                            onChange={(e) =>
+                                setData("password", e.target.value)
+                            }
+                            endContent={
+                                <button
+                                    className="focus:outline-none"
+                                    type="button"
+                                    onClick={togglePasswordVisibility}
+                                    aria-label="toggle password visibility"
+                                >
+                                    {isPasswordVisible ? (
+                                        <EyeSlashFilledIcon className="pointer-events-none text-2xl text-default-400" />
+                                    ) : (
+                                        <EyeFilledIcon className="pointer-events-none text-2xl text-default-400" />
+                                    )}
+                                </button>
+                            }
+                            type={isPasswordVisible ? "text" : "password"}
+                            className="w-full"
+                        />
+                        <ErrorMessage error={errors.password} />
+
+                        <Button
+                            type="submit"
+                            isDisabled={processing}
+                            className={`w-full text-white ${
+                                processing
+                                    ? "bg-gray-400"
+                                    : "bg-zinc-900 hover:bg-zinc-800"
+                            }`}
+                        >
+                            {processing ? (
+                                <Spinner color="default" size="sm" />
+                            ) : (
+                                "Login"
+                            )}
+                        </Button>
+                    </form>
                     <div>
                         <span className="text-gray-500">
                             Don't have an account?
                         </span>{" "}
                         <Link
-                            href="/sign-up"
-                            className="text-zinc-700 font-medium"
+                            href="/register"
+                            className="font-medium text-zinc-700"
                         >
                             Register here
                         </Link>

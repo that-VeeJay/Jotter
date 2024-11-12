@@ -9,9 +9,9 @@ export default function FeaturedPost() {
                 <Image
                     isBlurred
                     src={post2}
-                    className="object-cover w-full aspect-4/3 rounded-xl"
+                    className="aspect-4/3 w-full rounded-xl object-cover"
                 />
-                <div className="p-5 xl:p-10 flex flex-col justify-between gap-3 lg:gap-0">
+                <div className="flex flex-col justify-between gap-3 p-5 lg:gap-0 xl:p-10">
                     {/* User */}
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
@@ -21,10 +21,10 @@ export default function FeaturedPost() {
                         <p>12 mins ago</p>
                     </div>
                     {/* Content */}
-                    <h3 className="text-xl md:text-2xl xl:text-4xl font-semibold line-clamp-3">
+                    <h3 className="line-clamp-3 text-xl font-semibold md:text-2xl xl:text-4xl">
                         Lorem, ipsum dolor sit amet consect adicing elit.
                     </h3>
-                    <p className="lg:text-lg line-clamp-4">
+                    <p className="line-clamp-4 lg:text-lg">
                         Lorem, ipsum dolor sit amet consectetur adipisicing
                         elit. Sit libero recusandae aliquam animi numquam
                         accusamus et autem fugiat architecto facere? Lorem ipsum
