@@ -54,7 +54,10 @@ const PostCard = ({ post }) => {
                 <h3 className="line-clamp-2 text-xl font-semibold">
                     {post.title}
                 </h3>
-                <p className="line-clamp-3 text-sm">{post.body}</p>
+                <p
+                    className="line-clamp-3 text-sm"
+                    dangerouslySetInnerHTML={{ __html: post.body }}
+                ></p>
                 <div className="flex items-center gap-3">
                     <CategoryChip category={post.category.title} />
                     <span>•</span>

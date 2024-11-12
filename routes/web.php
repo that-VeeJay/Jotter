@@ -7,9 +7,14 @@ use App\Http\Controllers\RegistrationController;
 
 Route::get('/', [PostController::class, 'index'])->name('home');
 Route::get('/create', [PostController::class, 'create']);
+Route::post('/create', [PostController::class, 'store']);
+
+
 
 Route::get('/register', [RegistrationController::class, 'create'])->name('register.create');
 Route::post('/register', [RegistrationController::class, 'store']);
+
+
 
 Route::get('/login', [SessionController::class, 'create'])->name('login.create');
 Route::post('/login', [SessionController::class, 'store']);

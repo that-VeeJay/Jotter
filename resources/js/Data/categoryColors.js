@@ -7,6 +7,8 @@ const categoryColors = {
     Entertainment: "danger",
     Travel: "default",
     Food: "primary",
+    Sports: "secondary",
+    Gaming: "success",
 };
 
 export default categoryColors;
