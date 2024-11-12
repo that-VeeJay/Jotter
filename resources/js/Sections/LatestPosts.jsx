@@ -3,6 +3,14 @@ import { Avatar, Card, Chip, Image } from "@nextui-org/react";
 import categoryColors from "../Data/categoryColors";
 import SectionTitle from "../Components/SectionTitle";
 import placeholderImage from "../assets/placeholder_image.png";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+
+// Day JS
+dayjs.extend(relativeTime);
+const convertToISOFormat = (dateString) => {
+    return dateString.replace(" ", "T") + "Z";
+};
 
 // Function to format date
 const formatDate = (date) => {
@@ -29,6 +37,11 @@ const PostCard = ({ post }) => {
 
     const handleImageLoad = () => setImageLoading(false);
 
+    // Use dayjs to format the 'published_at' date as a relative time
+    const publishedDate = dayjs(
+        convertToISOFormat(post.published_at),
+    ).fromNow();
+
     return (
         <Card
             key={post.id}
@@ -48,7 +61,7 @@ const PostCard = ({ post }) => {
                         <p className="text-sm font-medium">{post.user.name}</p>
                     </div>
                     <p className="text-sm font-medium text-gray-500">
-                        {formatDate(post.published_at)}
+                        {publishedDate}
                     </p>
                 </div>
                 <h3 className="line-clamp-2 text-xl font-semibold">
