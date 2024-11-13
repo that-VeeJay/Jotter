@@ -1,37 +1,52 @@
-import SectionTitle from "../../Components/SectionTitle";
-import NavLayout from "../../Layout/NavLayout";
+import { useForm } from "@inertiajs/react";
 import { Image, User } from "@nextui-org/react";
-import { Card } from "@nextui-org/react";
+import {
+    Button,
+    Card,
+    Dropdown,
+    DropdownItem,
+    DropdownMenu,
+    DropdownTrigger,
+    Spinner,
+    Link,
+} from "@nextui-org/react";
+import NavLayout from "../../Layout/NavLayout";
+import SectionTitle from "../../Components/SectionTitle";
 import CategoryChip from "../../Components/CategoryChip";
+import FormattedDate from "../../Components/FormattedDate";
 
 const RelatedPosts = ({ relatedPosts }) => {
     return (
         <>
             {relatedPosts.map((post) => (
-                <Card className="space-y-2 border-1 p-5 shadow-none dark:border-zinc-700">
-                    <CategoryChip category={post.category.title} />
-                    <h3 className="text-lg font-medium">{post.title}</h3>
-                    <div className="flex gap-3 text-sm">
-                        <p>{post.user.name}</p>
-                        <span>•</span>
-                        <p>
-                            {new Date(post.published_at).toLocaleDateString(
-                                "en-US",
-                                {
-                                    year: "numeric",
-                                    month: "long",
-                                    day: "numeric",
-                                },
-                            )}
-                        </p>
-                    </div>
-                </Card>
+                <Link href={`/post/${post.id}`}>
+                    <Card className="space-y-2 border-1 p-5 shadow-none dark:border-zinc-700">
+                        <CategoryChip category={post.category.title} />
+                        <h3 className="text-lg font-medium">{post.title}</h3>
+                        <div className="flex gap-3 text-sm">
+                            <p>{post.user.name}</p>
+                            <span>•</span>
+                            <p>
+                                <FormattedDate date={post.published_at} />
+                            </p>
+                        </div>
+                    </Card>
+                </Link>
             ))}
         </>
     );
 };
 
-export default function Show({ post, relatedPosts }) {
+export default function Show({ post, relatedPosts, isAuthenticated, user }) {
+    const { delete: destroy, processing } = useForm();
+
+    const handleDeletePost = (e) => {
+        e.preventDefault();
+        if (confirm("Are you sure you want to delete this post?")) {
+            destroy(`/post/${post.id}`);
+        }
+    };
+
     return (
         <div className="container mx-auto pt-28">
             <div className="grid grid-cols-3">
@@ -42,17 +57,64 @@ export default function Show({ post, relatedPosts }) {
                             src={`/${post.image}`}
                             className="aspect-[3/2] object-cover"
                         />
-                        <div className="space-y-5 p-5 lg:p-10">
+                        <div className="flex flex-col items-start justify-center space-y-5 p-5 lg:p-10">
+                            <CategoryChip category={post.category.title} />
+
                             <h1 className="text-xl font-medium lg:text-2xl xl:text-4xl">
                                 {post.title}
                             </h1>
-                            <User
-                                name={post.user.name}
-                                avatarProps={{
-                                    src: "https://i.pravatar.cc/150?u=a04258114e29026702d",
-                                }}
-                                className="font-semibold"
-                            />
+
+                            <div className="flex w-full justify-between">
+                                <div className="flex items-center gap-5">
+                                    <User
+                                        name={post.user.name}
+                                        avatarProps={{
+                                            src: "https://i.pravatar.cc/150?u=a04258114e29026702d",
+                                        }}
+                                        className="font-semibold"
+                                    />
+                                    <span>•</span>
+                                    <p>
+                                        <FormattedDate
+                                            date={post.published_at}
+                                        />
+                                    </p>
+                                </div>
+                                {isAuthenticated &&
+                                    user?.id === post.user.id && (
+                                        <Dropdown>
+                                            <DropdownTrigger>
+                                                <Button
+                                                    isDisabled={processing}
+                                                    variant="flat"
+                                                >
+                                                    {processing ? (
+                                                        <Spinner
+                                                            size="sm"
+                                                            color="default"
+                                                        ></Spinner>
+                                                    ) : (
+                                                        "Actions"
+                                                    )}
+                                                </Button>
+                                            </DropdownTrigger>
+                                            <DropdownMenu aria-label="Static Actions">
+                                                <DropdownItem key="new">
+                                                    Edit
+                                                </DropdownItem>
+
+                                                <DropdownItem
+                                                    key="delete"
+                                                    className="text-danger"
+                                                    color="danger"
+                                                    onClick={handleDeletePost}
+                                                >
+                                                    Delete
+                                                </DropdownItem>
+                                            </DropdownMenu>
+                                        </Dropdown>
+                                    )}
+                            </div>
                         </div>
                     </div>
                 </div>

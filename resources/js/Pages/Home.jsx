@@ -17,21 +17,26 @@ export default function Home({ latestPosts }) {
 
     // Post success message
     useEffect(() => {
-        if (flash.success) {
-            toast.success(flash.success, {
-                position: "bottom-right",
-                autoClose: 5000,
-                hideProgressBar: true,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                transition: Bounce,
-                theme: savedTheme,
-                font: "Poppins",
-            });
+        const toastOptions = {
+            position: "bottom-right",
+            autoClose: 5000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            transition: Bounce,
+            theme: savedTheme,
+            font: "Poppins",
+        };
+
+        if (flash) {
+            const message = flash.success || flash.error;
+            const toastType = flash.success ? toast.success : toast.error;
+
+            toastType(message, toastOptions);
         }
-    }, [flash.success]);
+    }, [flash]);
 
     return (
         <div className="container mx-auto space-y-10 pt-24">

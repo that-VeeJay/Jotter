@@ -79,4 +79,11 @@ class PostController extends BaseController
         ]);
     }
 
+    public function destroy(Post $post)
+    {
+        $post->delete();
+        return redirect()->route('home')
+            ->with('error', 'Post deleted.');
+    }
+
 }
