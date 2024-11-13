@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('body');
-            $table->string('image');
+            $table->string('image')->nullable();
             $table->string('read_time');
             $table->timestamp('published_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->foreignId('user_id')->constrained()->onDelete('cascade');

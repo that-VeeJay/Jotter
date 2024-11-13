@@ -39,7 +39,9 @@ const PostCard = ({ post }) => {
                 <Image
                     isLoading={imageLoading}
                     onLoad={handleImageLoad}
-                    src={post.image || placeholderImage}
+                    src={
+                        post.image ? `uploads/${post.image}` : placeholderImage
+                    }
                     isBlurred
                     className="aspect-video object-cover md:w-screen lg:aspect-square xl:aspect-video"
                 />

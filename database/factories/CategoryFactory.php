@@ -8,10 +8,10 @@ class CategoryFactory extends Factory
 {
     public function definition(): array
     {
-        $categories = ['Technology', 'Lifestyle', 'Health', 'Finance', 'Education', 'Entertainment', 'Travel', 'Food'];
+        $categories = ['Technology', 'Lifestyle', 'Health', 'Finance', 'Education', 'Entertainment', 'Travel', 'Food', 'Gaming', 'Movies'];
 
         return [
-            'title' => fake()->randomElement($categories)
+            'title' => $categories[array_search($this->faker->unique()->randomElement($categories), $categories)], 
         ];
     }
 }

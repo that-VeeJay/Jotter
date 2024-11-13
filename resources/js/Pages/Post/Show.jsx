@@ -19,7 +19,7 @@ const RelatedPosts = ({ relatedPosts }) => {
     return (
         <>
             {relatedPosts.map((post) => (
-                <Link href={`/post/${post.id}`}>
+                <Link href={`/post/${post.id}`} key={post.id}>
                     <Card className="space-y-2 border-1 p-5 shadow-none dark:border-zinc-700">
                         <CategoryChip category={post.category.title} />
                         <h3 className="text-lg font-medium">{post.title}</h3>
@@ -54,7 +54,7 @@ export default function Show({ post, relatedPosts, isAuthenticated, user }) {
                     <div className="grid lg:grid-cols-2">
                         <Image
                             isBlurred
-                            src={`/${post.image}`}
+                            src={`/uploads/${post.image}`}
                             className="aspect-[3/2] object-cover"
                         />
                         <div className="flex flex-col items-start justify-center space-y-5 p-5 lg:p-10">
@@ -99,8 +99,13 @@ export default function Show({ post, relatedPosts, isAuthenticated, user }) {
                                                 </Button>
                                             </DropdownTrigger>
                                             <DropdownMenu aria-label="Static Actions">
-                                                <DropdownItem key="new">
-                                                    Edit
+                                                <DropdownItem
+                                                    key="new"
+                                                    as={Link}
+                                                    href={`/posts/${post.id}/edit`}
+                                                    className="text-gray-900"
+                                                >
+                                                    Update
                                                 </DropdownItem>
 
                                                 <DropdownItem
