@@ -9,7 +9,7 @@ Route::get('/', [PostController::class, 'index'])->name('home');
 Route::get('/create', [PostController::class, 'create']);
 Route::post('/create', [PostController::class, 'store']);
 
-
+Route::get('/post/{post}', [PostController::class, 'show']);
 
 Route::get('/register', [RegistrationController::class, 'create'])->name('register.create');
 Route::post('/register', [RegistrationController::class, 'store']);

@@ -58,7 +58,25 @@ class PostController extends BaseController
 
         return redirect()->route('home')
             ->with('success', 'Post created successfully!');
-            
+    }
+
+    public function show(Post $post)
+    {
+        $post->load(['user', 'category']);
+
+        $currentCategory = $post->category->id;
+        $relatedPosts = Post::where('category_id', $currentCategory)
+            ->where('id', '!=', $post->id)
+            ->latest()
+            ->take(4)
+            ->with('user', 'category')
+            ->get();
+
+
+        return inertia('Post/Show', [
+            'post' => $post, 
+            'relatedPosts' => $relatedPosts
+        ]);
     }
 
 }

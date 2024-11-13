@@ -1,4 +1,5 @@
 const { nextui } = require("@nextui-org/react");
+import theme from "tailwindcss/defaultTheme";
 import defaultTheme from "tailwindcss/defaultTheme";
 
 /** @type {import('tailwindcss').Config} */
@@ -33,5 +34,5 @@ export default {
         },
     },
     darkMode: "class",
-    plugins: [nextui()],
+    plugins: [nextui(), require("@tailwindcss/typography")],
 };
