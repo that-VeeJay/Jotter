@@ -18,6 +18,7 @@ return new class extends Migration
             $table->text('body');
             $table->string('image')->nullable();
             $table->string('read_time');
+            $table->unsignedInteger('like_count')->default(0);
             $table->timestamp('published_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('category_id')->constrained()->onDelete('cascade');

@@ -10,7 +10,7 @@ import MostPopular from "../Sections/MostPopular";
 import FeaturedPost from "../Sections/FeaturedPost";
 import "react-toastify/dist/ReactToastify.css";
 
-export default function Home({ latestPosts }) {
+export default function Home({ latestPosts, categories }) {
     const { flash } = usePage().props;
 
     const savedTheme = localStorage.getItem("theme");
@@ -45,7 +45,7 @@ export default function Home({ latestPosts }) {
 
             <div className="grid grid-cols-1 gap-5 lg:grid-cols-3">
                 <LatestPosts latestPosts={latestPosts} />
-                <MostPopular />
+                <MostPopular categories={categories} />
             </div>
             <ToastContainer />
             <MustRead />

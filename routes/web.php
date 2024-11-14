@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\RegistrationController;
 
@@ -30,3 +31,11 @@ Route::post('/logout', [SessionController::class, 'destroy'])->name('logout');
 
 
 Route::inertia('/test', 'Test');
+
+
+
+Route::post('/posts/{post}/comments', [CommentController::class, 'store'])->middleware('auth');
+Route::get('/posts/{post}/comments', [CommentController::class, 'fetchComments']);
+Route::post('/comments/{comment}', [CommentController::class, 'deleteComment']);
+
+Route::put('/comments/{comment}', [CommentController::class, 'updateComment']);

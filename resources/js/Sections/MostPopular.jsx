@@ -1,5 +1,6 @@
 import { Card, Chip } from "@nextui-org/react";
 import SectionTitle from "../Components/SectionTitle";
+import categoryColors from "../Data/categoryColors";
 
 const PostCard = () => {
     return (
@@ -20,15 +21,27 @@ const PostCard = () => {
     );
 };
 
-const CategoryChip = ({ text }) => {
+const CategoryChip = ({ categoriesList, colors }) => {
     return (
-        <Chip color="danger" variant="flat" className="px-4 py-5">
-            {text}
-        </Chip>
+        <div className="flex flex-wrap gap-3">
+            {categoriesList.map((category) => {
+                const chipColor = colors[category.title] || "warning";
+                return (
+                    <Chip
+                        color={chipColor}
+                        key={category.id}
+                        variant="flat"
+                        className="px-4 py-5"
+                    >
+                        {category.title}
+                    </Chip>
+                );
+            })}
+        </div>
     );
 };
 
-export default function MostPopular() {
+export default function MostPopular({ categories }) {
     return (
         <section className="lg:col-span space-y-10">
             <div>
@@ -47,17 +60,11 @@ export default function MostPopular() {
                 <span>Discover by topic</span>
                 <SectionTitle title="Categories" displaySeeAll={false} />
 
-                <div className="mt-6 grid grid-cols-4 gap-6 lg:grid-cols-3 xl:grid-cols-4">
-                    <CategoryChip text="Travel" />
-                    <CategoryChip text="Travel" />
-                    <CategoryChip text="Travel" />
-                    <CategoryChip text="Travel" />
-                    <CategoryChip text="Travel" />
-                    <CategoryChip text="Travel" />
-                    <CategoryChip text="Travel" />
-                    <CategoryChip text="Travel" />
-                    <CategoryChip text="Travel" />
-                    <CategoryChip text="Travel" />
+                <div className="mt-6 flex flex-wrap gap-3">
+                    <CategoryChip
+                        categoriesList={categories}
+                        colors={categoryColors} 
+                    />
                 </div>
             </div>
         </section>

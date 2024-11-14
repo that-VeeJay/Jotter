@@ -2,20 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use Log;
 use App\Models\Post;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log as logtest;
 
 class PostController extends BaseController
 {
     public function index()
     {
         $latestPosts = Post::with(['user', 'category'])->latest()->take(4)->get();
+        $categories = Category::all();
+        
         return inertia('Home', [
             'latestPosts' => $latestPosts,
+            'categories' => $categories
         ]);
     }
 
@@ -79,7 +80,8 @@ class PostController extends BaseController
 
         return inertia('Post/Show', [
             'post' => $post, 
-            'relatedPosts' => $relatedPosts
+            'relatedPosts' => $relatedPosts,
+            'comments' => $post->comments()->with('user')->latest()->get(),
         ]);
     }
 
@@ -116,7 +118,7 @@ class PostController extends BaseController
 
         $post->update($postData);
 
-        return redirect()->route('home');
+        return redirect()->route('home')
+            ->with('success', 'Post updated successfully!');
     }
-
 }
