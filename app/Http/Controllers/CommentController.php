@@ -20,7 +20,7 @@ class CommentController extends Controller
             'body' => $validated['body']
         ]);
 
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Comment posted');
     }
 
     public function fetchComments(Post $post)
@@ -32,13 +32,12 @@ class CommentController extends Controller
     public function deleteComment(Comment $comment)
     {
         $comment->delete();
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Comment deleted');
             
     }
 
     public function updateComment(Request $request, Comment $comment)
     {
-        sleep(5);
         if ($comment->user_id !== Auth::id()) {
         return response()->json(['error' => 'Unauthorized'], 403);
         }
@@ -51,6 +50,6 @@ class CommentController extends Controller
             'body' => $validated['body']
         ]);
 
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Comment updated');
     }
 }
