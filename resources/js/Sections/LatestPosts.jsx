@@ -66,7 +66,7 @@ const PostCard = ({ post, savedTheme }) => {
                                 <User
                                     as="button"
                                     name={post.user.name}
-                                    className="mb-3 transition-transform md:mb-0"
+                                    className="mb-3 transition-transform xl:mb-0"
                                     avatarProps={{
                                         src: `/profiles/${post.user.profile_picture}`,
                                         size: "sm",

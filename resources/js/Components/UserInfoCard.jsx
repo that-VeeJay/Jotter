@@ -5,13 +5,16 @@ import {
     CardBody,
     CardFooter,
     CardHeader,
+    // Link,
 } from "@nextui-org/react";
 import React from "react";
+import { usePage, Link } from "@inertiajs/react";
 
 export default function UserInfoCard({ user }) {
     const [isFollowed, setIsFollowed] = React.useState(false);
 
-    console.log(user);
+    const { auth } = usePage().props;
+    const isCurrentUser = auth.user && auth.user.id === user.id;
 
     return (
         <Card
@@ -20,17 +23,26 @@ export default function UserInfoCard({ user }) {
         >
             <CardHeader className="justify-between">
                 <div className="flex gap-3">
-                    <Avatar
-                        isBordered
-                        radius="full"
-                        size="md"
-                        src={`/profiles/${user.profile_picture}`}
-                    />
-                    <div className="flex flex-col items-start justify-center">
-                        <h4 className="text-small font-semibold leading-none text-default-600">
-                            {user.name}
-                        </h4>
-                    </div>
+                    <Link
+                        href={
+                            isCurrentUser
+                                ? "/profile"
+                                : `/profile/user/${user.id}`
+                        }
+                        className="flex gap-3"
+                    >
+                        <Avatar
+                            isBordered
+                            radius="full"
+                            size="md"
+                            src={`/profiles/${user.profile_picture}`}
+                        />
+                        <div className="flex flex-col items-start justify-center">
+                            <h4 className="text-small font-semibold leading-none text-default-600">
+                                {user.name}
+                            </h4>
+                        </div>
+                    </Link>
                 </div>
                 <Button
                     className={

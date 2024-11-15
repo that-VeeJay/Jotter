@@ -18,7 +18,6 @@ const Create = ({ categories }) => {
     const { data, setData, post, errors, processing } =
         useForm(initialFieldValue);
 
-    // State to hold the image preview
     const [imagePreview, setImagePreview] = useState(null);
 
     const handleImageChange = (e) => {
@@ -44,7 +43,6 @@ const Create = ({ categories }) => {
         <div className="flex min-h-screen items-center justify-center pt-16">
             <Card className="w-[50rem] border-1 p-10 shadow-none dark:border-zinc-800">
                 <form onSubmit={handleFormSubmission} className="space-y-5">
-                    {/* <h3 className="text-2xl font-semibold">Create Post</h3> */}
                     {/* Title */}
                     <div>
                         <label>Title</label>

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useForm } from "@inertiajs/react";
+import { Link, useForm, usePage } from "@inertiajs/react";
 import {
     Avatar,
     Button,
@@ -19,7 +19,6 @@ import {
 import { SunIcon } from "../Icons/SunIcon";
 import { MoonIcon } from "../Icons/MoonIcon";
 import { JotterLogo } from "../Icons/JotterLogo";
-import userProfile from "../assets/userProfile.jpg";
 
 export default function NavLayout({
     children,
@@ -49,12 +48,6 @@ export default function NavLayout({
         localStorage.setItem("theme", newTheme);
     };
 
-    const navLinks = [
-        { label: "Home", href: "#", isActive: false },
-        { label: "Creator", href: "#", isActive: true },
-        { label: "Community", href: "#", isActive: false },
-    ];
-
     const menuItems = [
         "Profile",
         "Dashboard",
@@ -68,16 +61,32 @@ export default function NavLayout({
         "Log Out",
     ];
 
+    const { currentRouteName } = usePage().props;
+
+    const navLinks = [
+        { label: "Home", href: "/", routeName: "home" },
+        { label: "Creators", href: "/creators", routeName: "creators.index" },
+        {
+            label: "Community",
+            href: "/community",
+            routeName: "community.index",
+        },
+    ];
+
     const RenderNavbarLinks = () => (
         <NavbarContent className="hidden gap-3 sm:flex">
             {navLinks.map((link) => (
                 <NavbarItem
                     key={link.label}
-                    isActive={link.isActive}
+                    isActive={currentRouteName === link.routeName}
                     className="dark:text-white"
                 >
                     <Link
-                        color={link.isActive ? "danger" : "foreground"}
+                        color={
+                            currentRouteName === link.routeName
+                                ? "danger"
+                                : "foreground"
+                        }
                         href={link.href}
                     >
                         {link.label}

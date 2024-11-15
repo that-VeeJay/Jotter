@@ -42,4 +42,13 @@ class ProfileController extends BaseController
 
         return redirect()->back()->with('success', 'Profile updated');
     }
+
+    public function show(User $user)
+    {
+        $posts = $user->posts()->latest()->get();
+        return inertia('Profile/VisitProfile', [
+            'visitedUser' => $user,
+            'posts' => $posts,
+        ]);
+    }
 }

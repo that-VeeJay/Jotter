@@ -28,7 +28,6 @@ class PostController extends BaseController
 
     public function store(Request $request)
     {
-        // Validate the request data
         $validatedData = $request->validate([
             'title' => ['required', 'string'],
             'image' => ['required', 'mimes:png,jpg,jpeg', 'max:5120'],
@@ -37,7 +36,6 @@ class PostController extends BaseController
             'body' => ['required'],
         ]);
 
-        // Check and handle image upload
         if ($request->hasFile('image')) {
             $file = $request->file('image');
             $extension = $file->getClientOriginalExtension();
@@ -45,19 +43,15 @@ class PostController extends BaseController
             $path = 'uploads/';
             $file->move(public_path($path), $filename);
 
-            // Set the image path in validated data
-            // $validatedData['image'] = $path . $filename;
             $validatedData['image'] = $filename;
         }
 
-        // Merge the validated data with additional fields
         $postData = array_merge($validatedData, [
             'user_id' => Auth::id(),
             'category_id' => $request->category,
             'published_at' => now(),
         ]);
 
-        // Create the new post with all data
         Post::create($postData);
 
         return redirect()->route('home')
@@ -102,7 +96,6 @@ class PostController extends BaseController
 
     public function update(Post $post)
     {
-        // dd(request()->title);
         $validatedData = request()->validate([
             'title' => ['nullable', 'string'],
             'category' => ['nullable', 'integer'],
@@ -117,7 +110,7 @@ class PostController extends BaseController
 
         $post->update($postData);
 
-        return redirect()->route('home')
+        return redirect()->route('post.show', ['post' => $post->id])
             ->with('success', 'Post updated successfully!');
     }
 }
