@@ -5,7 +5,11 @@ const CategoryChip = ({ category, padding = "0" }) => {
     const chipColor = categoryColors[category] || "warning";
 
     return (
-        <Chip color={chipColor} variant="flat" className={`p-${padding}`}>
+        <Chip
+            color={chipColor}
+            variant="flat"
+            className={`p-${padding} hover:cursor-pointer`}
+        >
             {category}
         </Chip>
     );

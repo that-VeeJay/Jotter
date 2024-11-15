@@ -1,5 +1,16 @@
-import { useState } from "react";
-import { Avatar, Card, Chip, Image } from "@nextui-org/react";
+import { useEffect, useState } from "react";
+import {
+    Avatar,
+    Card,
+    Chip,
+    Image,
+    Popover,
+    PopoverTrigger,
+    PopoverContent,
+    Button,
+    Tooltip,
+    User,
+} from "@nextui-org/react";
 import categoryColors from "../Data/categoryColors";
 import SectionTitle from "../Components/SectionTitle";
 import placeholderImage from "../assets/placeholder_image.png";
@@ -7,6 +18,7 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { Link } from "@inertiajs/react";
 import CategoryChip from "../Components/CategoryChip";
+import UserInfoCard from "../Components/UserInfoCard";
 
 // Day JS
 dayjs.extend(relativeTime);
@@ -20,7 +32,7 @@ const stripHtmlTags = (html) => {
 };
 
 // PostCard Component to render each post
-const PostCard = ({ post }) => {
+const PostCard = ({ post, savedTheme }) => {
     const [imageLoading, setImageLoading] = useState(true);
 
     const handleImageLoad = () => setImageLoading(false);
@@ -31,11 +43,11 @@ const PostCard = ({ post }) => {
     ).fromNow();
 
     return (
-        <Link href={`/post/${post.id}`}>
-            <Card
-                key={post.id}
-                className="mb-5 grid grid-cols-1 border-1 p-3 shadow-none dark:border-zinc-800 lg:grid-cols-2"
-            >
+        <Card
+            key={post.id}
+            className="mb-5 grid grid-cols-1 border-1 p-3 shadow-none dark:border-zinc-800 lg:grid-cols-2"
+        >
+            <Link href={`post/${post.id}`}>
                 <Image
                     isLoading={imageLoading}
                     onLoad={handleImageLoad}
@@ -45,48 +57,73 @@ const PostCard = ({ post }) => {
                     isBlurred
                     className="aspect-video object-cover md:w-screen lg:aspect-square xl:aspect-video"
                 />
-                <div className="space-y-3 px-5 py-3 lg:flex lg:flex-col lg:justify-between lg:px-7 lg:py-8 xl:px-6 xl:py-3">
-                    <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                            <Avatar
-                                size="sm"
-                                src={`/profiles/${post.user.profile_picture}`}
-                            />
-                            <p className="text-sm font-medium">
-                                {post.user.name}
-                            </p>
-                        </div>
-                        <p className="text-sm font-medium text-gray-500">
-                            {publishedDate}
-                        </p>
+            </Link>
+            <div className="space-y-3 px-5 py-3 lg:flex lg:flex-col lg:justify-between lg:px-7 lg:py-8 xl:px-6 xl:py-3">
+                <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                        <Popover>
+                            <PopoverTrigger>
+                                <User
+                                    as="button"
+                                    name={post.user.name}
+                                    className="mb-3 transition-transform md:mb-0"
+                                    avatarProps={{
+                                        src: `/profiles/${post.user.profile_picture}`,
+                                        size: "sm",
+                                    }}
+                                />
+                            </PopoverTrigger>
+                            <PopoverContent
+                                className={
+                                    savedTheme === "dark" ? "dark" : "light"
+                                }
+                            >
+                                <UserInfoCard user={post.user} />
+                            </PopoverContent>
+                        </Popover>
                     </div>
-                    <h3 className="line-clamp-2 text-xl font-semibold">
+                    <p className="text-sm font-medium text-gray-500">
+                        {publishedDate}
+                    </p>
+                </div>
+                <Link href={`post/${post.id}`}>
+                    <h3 className="line-clamp-2 text-xl font-semibold text-black transition-all duration-300 hover:text-opacity-60 dark:text-white dark:hover:text-opacity-60">
                         {post.title}
                     </h3>
-                    <p className="line-clamp-3 text-sm">
-                        {stripHtmlTags(post.body)}
+                </Link>
+                <p className="line-clamp-3 text-sm">
+                    {stripHtmlTags(post.body)}
+                </p>
+                <div className="flex items-center gap-3">
+                    <CategoryChip category={post.category.title} />
+                    <span>•</span>
+                    <p className="text-sm font-medium text-gray-500">
+                        {post.read_time + " min read"}
                     </p>
-                    <div className="flex items-center gap-3">
-                        <CategoryChip category={post.category.title} />
-                        <span>•</span>
-                        <p className="text-sm font-medium text-gray-500">
-                            {post.read_time + " min read"}
-                        </p>
-                    </div>
                 </div>
-            </Card>
-        </Link>
+            </div>
+        </Card>
     );
 };
 
-// LatestPosts Component to render the list of posts
 export default function LatestPosts({ latestPosts }) {
+    const [savedTheme, setSavedTheme] = useState(null);
+
+    useEffect(() => {
+        const theme = localStorage.getItem("theme");
+        setSavedTheme(theme);
+    }, []);
+
     return (
         <section className="space-y-5 lg:col-span-2">
             <SectionTitle title="Latest Posts" displaySeeAll={false} />
             <div>
                 {latestPosts.map((post) => (
-                    <PostCard key={post.id} post={post} />
+                    <PostCard
+                        key={post.id}
+                        post={post}
+                        savedTheme={savedTheme}
+                    />
                 ))}
             </div>
         </section>
