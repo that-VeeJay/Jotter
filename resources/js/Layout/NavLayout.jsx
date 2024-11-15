@@ -86,6 +86,7 @@ export default function NavLayout({
             ))}
         </NavbarContent>
     );
+    
 
     return (
         <>
@@ -168,7 +169,7 @@ export default function NavLayout({
                                         color="danger"
                                         name={user.name}
                                         size="sm"
-                                        src={user.profile || userProfile}
+                                        src={`/profiles/${user.profile_picture}`}
                                     />
                                 </DropdownTrigger>
                                 <DropdownMenu
@@ -186,7 +187,11 @@ export default function NavLayout({
                                             {user.email}
                                         </p>
                                     </DropdownItem>
-                                    <DropdownItem key="profile">
+                                    <DropdownItem
+                                        key="profile"
+                                        as={Link}
+                                        href="/profile"
+                                    >
                                         Profile
                                     </DropdownItem>
                                     <DropdownItem key="settings">

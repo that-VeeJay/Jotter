@@ -28,7 +28,6 @@ class PostController extends BaseController
 
     public function store(Request $request)
     {
-
         // Validate the request data
         $validatedData = $request->validate([
             'title' => ['required', 'string'],

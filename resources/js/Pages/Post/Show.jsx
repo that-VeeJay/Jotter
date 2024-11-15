@@ -101,10 +101,11 @@ export default function Show({
                                     <User
                                         name={post.user.name}
                                         avatarProps={{
-                                            src: "https://i.pravatar.cc/150?u=a04258114e29026702d",
+                                            src: `/profiles/${post.user.profile_picture}`,
                                         }}
                                         className="font-semibold"
                                     />
+
                                     <span>•</span>
                                     <p>
                                         <FormattedDate

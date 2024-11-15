@@ -48,7 +48,10 @@ const PostCard = ({ post }) => {
                 <div className="space-y-3 px-5 py-3 lg:flex lg:flex-col lg:justify-between lg:px-7 lg:py-8 xl:px-6 xl:py-3">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
-                            <Avatar size="sm" />
+                            <Avatar
+                                size="sm"
+                                src={`/profiles/${post.user.profile_picture}`}
+                            />
                             <p className="text-sm font-medium">
                                 {post.user.name}
                             </p>

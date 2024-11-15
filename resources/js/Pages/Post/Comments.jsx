@@ -55,7 +55,7 @@ const Comments = ({ comments, onDeleteComment, authenticatedUser }) => {
                             <Avatar
                                 showFallback
                                 name={comment.user.name}
-                                src="https://i.pravatar.cc/150?u=a042581f4e29026024d"
+                                src={`/profiles/${comment.user.profile_picture}`}
                             />
                             <div>
                                 <div className="flex items-center gap-3">
