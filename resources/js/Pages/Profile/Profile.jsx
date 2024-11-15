@@ -1,11 +1,16 @@
-import NavLayout from "../Layout/NavLayout";
-import { Avatar, Tabs, Tab, Card, CardBody } from "@nextui-org/react";
-import EditProfileButton from "../Components/EditProfileButton";
+import { useEffect } from "react";
 import { toast, Toaster } from "sonner";
 import { usePage } from "@inertiajs/react";
-import { useEffect } from "react";
+import { Avatar, Card, CardBody, Tab, Tabs } from "@nextui-org/react";
+import Posts from "../Profile/Posts";
+import Account from "../Profile/Account";
+import NavLayout from "../../Layout/NavLayout";
+import EditProfileButton from "../../Components/EditProfileButton";
 
-export default function Profile({ user: loggedInUser }) {
+export default function Profile({
+    user: loggedInUser,
+    authenticatedUserPosts: posts,
+}) {
     const { flash } = usePage().props;
 
     useEffect(() => {
@@ -41,31 +46,14 @@ export default function Profile({ user: loggedInUser }) {
 
                 {/* Navigation */}
                 <div className="flex w-full flex-col">
-                    <Tabs aria-label="Options">
+                    <Tabs aria-label="Options" disabledKeys={["wip"]}>
                         <Tab key="posts" title="Posts">
-                            <Card>
-                                <CardBody>
-                                    Lorem ipsum dolor sit amet, consectetur
-                                    adipiscing elit, sed do eiusmod tempor
-                                    incididunt ut labore et dolore magna aliqua.
-                                    Ut enim ad minim veniam, quis nostrud
-                                    exercitation ullamco laboris nisi ut aliquip
-                                    ex ea commodo consequat.
-                                </CardBody>
-                            </Card>
+                            <Posts posts={posts} />
                         </Tab>
                         <Tab key="account" title="Account">
-                            <Card>
-                                <CardBody>
-                                    Ut enim ad minim veniam, quis nostrud
-                                    exercitation ullamco laboris nisi ut aliquip
-                                    ex ea commodo consequat. Duis aute irure
-                                    dolor in reprehenderit in voluptate velit
-                                    esse cillum dolore eu fugiat nulla pariatur.
-                                </CardBody>
-                            </Card>
+                            <Account />
                         </Tab>
-                        <Tab key="videos" title="Videos">
+                        <Tab key="wip" title="WIP">
                             <Card>
                                 <CardBody>
                                     Excepteur sint occaecat cupidatat non
